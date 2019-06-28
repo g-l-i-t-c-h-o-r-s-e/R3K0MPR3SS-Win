@@ -114,7 +114,7 @@ file := (abc - 0) . "out.nut"
 old := (abc - 1) . "out.nut"
 rem := (abc - 2) . "out.nut"
 
-runwait, %ComSpec% /c ffmpeg -i %old% -vn -f nut -c:a %AEnc% %file% -y
+runwait, ffmpeg -i %old% -vn -f nut -c:a %AEnc% %file% -y
 Sleep, 100
 abc +=1
 
@@ -136,7 +136,7 @@ file := (abc - 0) . "out.nut"
 old := (abc - 1) . "out.nut"
 rem := (abc - 2) . "out.nut"
 
-runwait, %ComSpec% /c ffmpeg -i %old% -f nut -c:v %VEnc% %file% -y
+runwait, ffmpeg -i %old% -f nut -c:v %VEnc% %file% -y
 Sleep, 100
 abc +=1
 
