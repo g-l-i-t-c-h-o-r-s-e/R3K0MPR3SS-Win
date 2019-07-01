@@ -1,3 +1,3 @@
 Work in Progress.
 
-![lepic](https://i.imgur.com/fbKX92Q.png)
+![lepic](https://i.imgur.com/8JRjcJH.png)
