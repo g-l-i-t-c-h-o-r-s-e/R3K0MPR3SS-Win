@@ -13,6 +13,7 @@ Gui Add, ComboBox, x269 y179 w120 vVDec Choose68, %List6%
 ;Disabled until I add more
 GuiControl, Disable, VDec
 Gui Add, Button, x138 y174 w116 h40 gGO, GO
+Gui Add, Button, x155 y215 w80 h23 gGOimg, Img
 Gui Add, Button, x19 y123 w80 h23 gInputA, Input A
 Gui Add, Button, x282 y124 w80 h23 gInputV, Input V
 Gui Add, Button, x9 y35 w80 h23 gffmpegbinary, FFMpeg Path
@@ -45,6 +46,35 @@ return
 InputV:
 FileSelectFile, UserInputV
 RunVar := 2
+return
+
+;Glitch image with video codec, change container format to bmp, tiff, xwd, etc
+Goimg:
+Gui, Submit, NoHide
+runwait, %ComSpec% /c %ffmpeg% -i "%UserInputV%" %VideoParams% 1out.%Format% -y
+
+abc := 1
+while abc < IterAmount
+{
+file := (abc - 0) . "out.%Format%"
+old := (abc - 1) . "out.%Format%"
+rem := (abc - 2) . "out.%Format%"
+transform, file, Deref, %file%
+transform, old, Deref, %old%
+transform, rem, Deref, %rem%
+
+
+runwait, %ComSpec% /c %ffmpeg% -i %old% -f nut -c:v %VEnc% %VideoParams% - | %ffmpeg% -i - %file%
+Sleep, 100
+abc +=1
+SB_SetText("Recompressing File; Loop Number " abc " of " IterAmount)
+
+FileDelete, %rem%
+}
+FileDelete, %old%
+runwait, %ffplay% -i %file%
+
+Gui, Show
 return
 
 GO:
