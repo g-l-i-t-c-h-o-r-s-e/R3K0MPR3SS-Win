@@ -2,8 +2,6 @@
 #NoEnv
 SetWorkingDir %A_ScriptDir%
 SetBatchLines -1
-;ffmpeg := "C:\Users\Username\Desktop\wao\ffmpeg.exe"
-;ffplay := "C:\Users\Username\Desktop\wao\ffplay.exe"
 
 ArrayListIndex := 0
  loop, read, files\vcodecs.txt
@@ -90,16 +88,16 @@ GuiControl, Disable, VDec
 Gui Add, Button, x138 y174 w116 h40 gGO, GO
 Gui Add, Button, x19 y123 w80 h23 gInputA, Input A
 Gui Add, Button, x282 y124 w80 h23 gInputV, Input V
-
 Gui Add, Button, x9 y35 w80 h23 gffmpegbinary, FFMpeg Path
 Gui Add, Button, x9 y10 w80 h23 gffplaybinary, FFplay Path
-
 Gui Add, Edit, x5 y204 w120 h21 vAudioParams, -strict -2
 Gui Add, Edit, x269 y204 w120 h21 vVideoParams
 Gui Add, Edit, x155 y142 w82 h25 vIterAmount, 30
 Gui Add, Edit, x174 y112 w35 h25 vFormat, nut
 Gui, Add, Text, x175 y95 w35 h15, Format
-Gui Add, StatusBar,%abc%,
+Gui Add, StatusBar,,%abc%
+Gui Add, Slider, x10 y81 w100 h28 +Tooltip Range0-32 vAudioQuality, 32
+Gui Add, Slider, x270 y82 w100 h28 +Tooltip Range0-32 vVideoQuality, 10
 
 Gui Show, w394 h257, R3K0MPR3SS 4 W1ND0WZ
 Return
@@ -123,10 +121,10 @@ RunVar := 2
 return
 
 GO:
-gui, Submit
+Gui, Submit, NoHide
 if (RunVar = 1)
 {
-runwait, %ffmpeg% -i "%UserInputA%" -f %Format% -c:a %AEnc% -q:a 32 -vn %AudioParams% -t 10 1out.%Format% -y
+runwait, %ffmpeg% -i "%UserInputA%" -f %Format% -c:a %AEnc% -q:a %AudioQuality% -vn %AudioParams% -t 10 1out.%Format% -y
 
 abc := 1
 while abc < IterAmount
@@ -141,6 +139,8 @@ transform, rem, Deref, %rem%
 runwait, %ffmpeg% -i "%old%" -f %Format% -c:a %AEnc% %AudioParams% %file% -y
 Sleep, 100
 abc +=1
+;transform, abc, Deref, %abc%
+SB_SetText("Compressing File; Loop Number = " abc)
 
 FileDelete, %rem%
 }
@@ -151,7 +151,7 @@ runwait, %ffplay% -i %file%
 
 if (RunVar = 2)
 {
-runwait, %ffmpeg% -i "%UserInputV%" -f %Format% -c:v %VEnc% -q:v 32 -an %VideoParams% -t 5 1out.%Format% -y
+runwait, %ffmpeg% -i "%UserInputV%" -f %Format% -c:v %VEnc% -q:v %VideoQuality% -an %VideoParams% -t 5 1out.%Format% -y
 
 abc := 1
 while abc < IterAmount
