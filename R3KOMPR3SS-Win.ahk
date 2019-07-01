@@ -2,8 +2,8 @@
 #NoEnv
 SetWorkingDir %A_ScriptDir%
 SetBatchLines -1
-ffmpeg := "C:\Users\Username\Desktop\wao\ffmpeg.exe"
-ffplay := "C:\Users\Username\Desktop\wao\ffplay.exe"
+;ffmpeg := "C:\Users\Execute\Desktop\ao\ffmpeg.exe"
+;ffplay := "C:\Users\Execute\Desktop\ao\ffplay.exe"
 
 ArrayListIndex := 0
  loop, read, files\vcodecs.txt
@@ -86,6 +86,10 @@ Gui Add, ComboBox, x269 y179 w120 vVDec Choose68, %List6%
 Gui Add, Button, x138 y174 w116 h40 gGO, GO
 Gui Add, Button, x19 y123 w80 h23 gInputA, Input A
 Gui Add, Button, x282 y124 w80 h23 gInputV, Input V
+
+Gui Add, Button, x9 y35 w80 h23 gffmpegbinary, FFMpeg Path
+Gui Add, Button, x9 y10 w80 h23 gffplaybinary, FFplay Path
+
 Gui Add, Edit, x5 y204 w120 h21
 Gui Add, Edit, x269 y204 w120 h21
 Gui Add, Edit, x155 y142 w82 h25 vIterAmount, 30
@@ -93,6 +97,14 @@ Gui Add, StatusBar,%abc%,
 
 Gui Show, w394 h257, Window
 Return
+
+ffmpegbinary:
+FileSelectFile, ffmpeg
+return
+
+ffplaybinary:
+FileSelectFile, ffplay
+return
 
 InputA:
 FileSelectFile, UserInputA
@@ -125,7 +137,7 @@ FileDelete, %rem%
 }
 FileDelete, %old%
 runwait, %ffplay% -i %file%
- return
+;return
 }
 
 if (RunVar = 2)
@@ -147,9 +159,11 @@ FileDelete, %rem%
 }
 FileDelete, %old%
 runwait, %ffplay% -i %file%
- return
+;return
 }
 
+Gui, Show
+return
 
 GuiEscape:
 GuiClose:
