@@ -2,8 +2,8 @@
 #NoEnv
 SetWorkingDir %A_ScriptDir%
 SetBatchLines -1
-;ffmpeg := "C:\Users\Execute\Desktop\ao\ffmpeg.exe"
-;ffplay := "C:\Users\Execute\Desktop\ao\ffplay.exe"
+;ffmpeg := "C:\Users\Username\Desktop\wao\ffmpeg.exe"
+;ffplay := "C:\Users\Username\Desktop\wao\ffplay.exe"
 
 ArrayListIndex := 0
  loop, read, files\vcodecs.txt
@@ -93,6 +93,8 @@ Gui Add, Button, x9 y10 w80 h23 gffplaybinary, FFplay Path
 Gui Add, Edit, x5 y204 w120 h21
 Gui Add, Edit, x269 y204 w120 h21
 Gui Add, Edit, x155 y142 w82 h25 vIterAmount, 30
+Gui Add, Edit, x174 y112 w35 h25 vFormat, nut
+Gui, Add, Text, x175 y95 w35 h15, Format
 Gui Add, StatusBar,%abc%,
 
 Gui Show, w394 h257, Window
@@ -120,16 +122,19 @@ GO:
 gui, Submit
 if (RunVar = 1)
 {
-runwait, %ffmpeg% -i "%UserInputA%" -f nut -c:a %AEnc% -q:a 32 -t 10 1out.nut -y
+runwait, %ffmpeg% -i "%UserInputA%" -f %Format% -c:a %AEnc% -q:a 32 -t 10 1out.%Format% -y
 
 abc := 1
 while abc < IterAmount
 {
-file := (abc - 0) . "out.nut"
-old := (abc - 1) . "out.nut"
-rem := (abc - 2) . "out.nut"
+file := (abc - 0) . "out.%Format%"
+old := (abc - 1) . "out.%Format%"
+rem := (abc - 2) . "out.%Format%"
+transform, file, Deref, %file%
+transform, old, Deref, %old%
+transform, rem, Deref, %rem%
 
-runwait, %ffmpeg% -i "%old%" -vn -f nut -c:a %AEnc% %file% -y
+runwait, %ffmpeg% -i "%old%" -vn -f %Format% -c:a %AEnc% %file% -y
 Sleep, 100
 abc +=1
 
@@ -142,16 +147,19 @@ runwait, %ffplay% -i %file%
 
 if (RunVar = 2)
 {
-runwait, %ffmpeg% -i "%UserInputV%" -f nut -c:v %VEnc% -q:v 32 -an -t 5 1out.nut -y
+runwait, %ffmpeg% -i "%UserInputV%" -f %Format% -c:v %VEnc% -q:v 32 -an -t 5 1out.%Format% -y
 
 abc := 1
 while abc < IterAmount
 {
-file := (abc - 0) . "out.nut"
-old := (abc - 1) . "out.nut"
-rem := (abc - 2) . "out.nut"
+file := (abc - 0) . "out.%Format%"
+old := (abc - 1) . "out.%Format%"
+rem := (abc - 2) . "out.%Format%"
+transform, file, Deref, %file%
+transform, old, Deref, %old%
+transform, rem, Deref, %rem%
 
-runwait, %ffmpeg% -i "%old%" -f nut -c:v %VEnc% %file% -y
+runwait, %ffmpeg% -i "%old%" -f %Format% -c:v %VEnc% %file% -y
 Sleep, 100
 abc +=1
 
