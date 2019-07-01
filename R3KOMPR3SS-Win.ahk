@@ -101,7 +101,7 @@ Gui Add, Edit, x174 y112 w35 h25 vFormat, nut
 Gui, Add, Text, x175 y95 w35 h15, Format
 Gui Add, StatusBar,%abc%,
 
-Gui Show, w394 h257, Window
+Gui Show, w394 h257, R3K0MPR3SS 4 W1ND0WZ
 Return
 
 ffmpegbinary:
