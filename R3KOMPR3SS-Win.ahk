@@ -66,7 +66,7 @@ transform, rem, Deref, %rem%
 runwait, %ffmpeg% -i "%old%" -f %Format% -c:a %AEnc% %AudioParams% %file% -y
 Sleep, 100
 abc +=1
-SB_SetText("Compressing File; Loop Number = " abc)
+SB_SetText("Recompressing File; Loop Number " abc " of " IterAmount)
 
 FileDelete, %rem%
 }
@@ -92,7 +92,7 @@ transform, rem, Deref, %rem%
 runwait, %ffmpeg% -i "%old%" -f %Format% -c:v %VEnc% %VideoParams% %file% -y
 Sleep, 100
 abc +=1
-SB_SetText("Compressing File; Loop Number = " abc)
+SB_SetText("Recompressing File; Loop Number " abc " of " IterAmount)
 
 FileDelete, %rem%
 }
