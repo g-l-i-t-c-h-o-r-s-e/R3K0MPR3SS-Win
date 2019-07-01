@@ -2,8 +2,8 @@
 #NoEnv
 SetWorkingDir %A_ScriptDir%
 SetBatchLines -1
-ffmpeg := "C:\Users\Execute\Desktop\ao\ffmpeg.exe"
-ffplay := "C:\Users\Execute\Desktop\ao\ffplay.exe"
+ffmpeg := "C:\Users\Username\Desktop\wao\ffmpeg.exe"
+ffplay := "C:\Users\Username\Desktop\wao\ffplay.exe"
 
 ArrayListIndex := 0
  loop, read, files\vcodecs.txt
