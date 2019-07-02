@@ -19,7 +19,7 @@ Gui Add, Button, x282 y124 w80 h23 gInputV, Input V
 Gui Add, Button, x9 y35 w80 h23 gffmpegbinary, FFMpeg Path
 Gui Add, Button, x9 y10 w80 h23 gffplaybinary, FFplay Path
 Gui Add, Edit, x5 y204 w120 h21 vAudioParams, -strict -2 -t 10
-Gui Add, Edit, x269 y204 w120 h21 vVideoParams, -t 5
+Gui Add, Edit, x269 y204 w120 h21 vVideoParams, -pix_fmt bgr24 -t 5
 Gui Add, Edit, x155 y142 w82 h25 vIterAmount, 30
 Gui Add, Edit, x174 y112 w35 h25 vFormat, nut
 Gui, Add, Text, x175 y95 w35 h15, Format
@@ -51,6 +51,7 @@ return
 ;Glitch image with video codec, change container format to bmp, tiff, xwd, etc
 Goimg:
 Gui, Submit, NoHide
+sleep, 100
 runwait, %ComSpec% /c %ffmpeg% -i "%UserInputV%" %VideoParams% 1out.%Format% -y
 
 abc := 1
@@ -64,7 +65,7 @@ transform, old, Deref, %old%
 transform, rem, Deref, %rem%
 
 
-runwait, %ComSpec% /c %ffmpeg% -i %old% -f nut -c:v %VEnc% %VideoParams% - | %ffmpeg% -i - %file%
+runwait, %ComSpec% /c %ffmpeg% -i %old% -f nut -c:v %VEnc% %VideoParams% - | %ffmpeg% -i - %VideoParams% %file% -y
 Sleep, 100
 abc +=1
 SB_SetText("Recompressing File; Loop Number " abc " of " IterAmount)
