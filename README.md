@@ -1,6 +1,6 @@
 Work in Progress.
 
-![lepic](https://i.imgur.com/z2sew42.png)
+![lepic](https://i.imgur.com/mwRCPTk.png)
 
 
 ## wot
